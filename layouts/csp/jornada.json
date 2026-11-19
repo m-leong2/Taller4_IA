@@ -1,0 +1,83 @@
+{
+  "name": "Jornada del observatorio",
+  "description": "Seis tareas con técnicos y zonas compartidos. MRV y LCV cambian el orden de las decisiones.",
+  "slots": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "tasks": [
+    {
+      "id": "inspeccionar",
+      "label": "Inspeccionar óptica",
+      "technician": "marta",
+      "zone": "optica",
+      "slots": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "calibrar",
+      "label": "Calibrar sensor",
+      "technician": "luis",
+      "zone": "optica",
+      "slots": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "id": "limpiar",
+      "label": "Limpiar tablero",
+      "technician": "ana",
+      "zone": "tablero",
+      "slots": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "id": "probar",
+      "label": "Probar enlace",
+      "technician": "marta",
+      "zone": "optica",
+      "slots": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "alinear",
+      "label": "Alinear equipo",
+      "technician": "luis",
+      "zone": "tablero",
+      "slots": [
+        1,
+        2,
+        4
+      ]
+    },
+    {
+      "id": "verificar",
+      "label": "Verificar sistema",
+      "technician": "marta",
+      "zone": "optica",
+      "slots": [
+        2,
+        3
+      ]
+    }
+  ],
+  "before": [
+    [
+      "inspeccionar",
+      "verificar"
+    ]
+  ]
+}

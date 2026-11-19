@@ -1,0 +1,11 @@
+{
+  "name": "Cadena de mantenimiento",
+  "description": "Orden de variables B, A, C. A < B < C fuerza las franjas 1, 2 y 3; AC-3 lo detecta antes de buscar.",
+  "slots": [1, 2, 3],
+  "tasks": [
+    {"id": "B", "label": "Calibrar antena", "technician": "ana", "zone": "antena", "slots": [1, 2, 3]},
+    {"id": "A", "label": "Inspeccionar tablero", "technician": "ana", "zone": "tablero", "slots": [1, 2, 3]},
+    {"id": "C", "label": "Probar sistema", "technician": "luis", "zone": "antena", "slots": [1, 2, 3]}
+  ],
+  "before": [["A", "B"], ["B", "C"]]
+}

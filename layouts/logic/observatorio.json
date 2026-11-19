@@ -1,0 +1,37 @@
+{
+  "default_task": "inspeccion",
+  "default_slot": "2",
+  "facts": [
+    ["Programada", "inspeccion", "2"],
+    ["Programada", "calibracion", "3"],
+    ["Asignado", "inspeccion", "ana"],
+    ["Asignado", "calibracion", "luis"],
+    ["Requiere", "inspeccion", "electrica"],
+    ["Requiere", "calibracion", "optica"],
+    ["Habilitado", "ana", "electrica"],
+    ["Habilitado", "luis", "optica"],
+    ["Disponible", "ana", "2"],
+    ["Disponible", "luis", "3"],
+    ["EnZona", "inspeccion", "tablero"],
+    ["EnZona", "calibracion", "antena"],
+    ["AislamientoConfirmado", "tablero", "2"],
+    ["SinAlertaConfirmada", "tablero", "2"],
+    ["AislamientoConfirmado", "antena", "3"],
+    ["SinAlertaConfirmada", "antena", "3"]
+  ],
+  "cases": {
+    "autorizacion": {
+      "description": "Especialidad, disponibilidad y condiciones de ambas zonas confirmadas.",
+      "remove": [], "add": []
+    },
+    "bloqueo": {
+      "description": "Se confirma una alerta en tablero, franja 2. Se retira la confirmación de ausencia de alerta.",
+      "remove": [["SinAlertaConfirmada", "tablero", "2"]],
+      "add": [["Alerta", "tablero", "2"]]
+    },
+    "informacion_insuficiente": {
+      "description": "No se ha confirmado el aislamiento de tablero en la franja 2. No se afirma que haya fallado.",
+      "remove": [["AislamientoConfirmado", "tablero", "2"]], "add": []
+    }
+  }
+}

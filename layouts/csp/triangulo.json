@@ -1,0 +1,11 @@
+{
+  "name": "Tres tareas, dos franjas",
+  "description": "Tres tareas del mismo técnico y solo dos franjas. Es consistente por arcos, pero no tiene solución.",
+  "slots": [1, 2],
+  "tasks": [
+    {"id": "A", "label": "Inspeccionar tablero", "technician": "ana", "zone": "tablero", "slots": [1, 2]},
+    {"id": "B", "label": "Calibrar antena", "technician": "ana", "zone": "antena", "slots": [1, 2]},
+    {"id": "C", "label": "Revisar óptica", "technician": "ana", "zone": "optica", "slots": [1, 2]}
+  ],
+  "before": []
+}

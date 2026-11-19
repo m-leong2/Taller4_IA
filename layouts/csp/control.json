@@ -1,0 +1,11 @@
+{
+  "name": "Control de tres intervenciones",
+  "description": "A debe preceder a B. Las tres tareas comparten técnico. Hay tres soluciones.",
+  "slots": [1, 2, 3],
+  "tasks": [
+    {"id": "A", "label": "Inspeccionar", "technician": "ana", "zone": "tablero", "slots": [1, 2]},
+    {"id": "B", "label": "Calibrar", "technician": "ana", "zone": "antena", "slots": [2, 3]},
+    {"id": "C", "label": "Verificar", "technician": "ana", "zone": "optica", "slots": [1, 2, 3]}
+  ],
+  "before": [["A", "B"]]
+}
