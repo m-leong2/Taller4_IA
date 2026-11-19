@@ -1,6 +1,8 @@
 """Puntos 1–3. Retroceso, consistencia de arcos y heurísticas."""
 from collections import deque
+from models import csp
 from models.csp import SearchTrace, copy_domains
+
 
 
 def backtracking_search(csp, domains=None, select_variable=None,
@@ -78,8 +80,44 @@ def revise(csp, x, y, domains):
       entre ese par de tareas, respetando la dirección de las precedencias.
     - Si elimina elementos mientras recorre una lista, itere sobre una copia.
     """
-    # TODO: Add your code here
-    raise NotImplementedError
+    
+    cambio = False
+
+    for valor_x in list(domains[x]):
+        tiene_soporte = False
+
+        for valor_y in domains[y]:
+            if csp.compatible(x, valor_x, y, valor_y):
+                tiene_soporte = True
+
+        if tiene_soporte == False:
+            domains[x].remove(valor_x)
+            cambio = True
+
+    return cambio
+
+    """
+    codigo inicial: 
+      
+    cambio = False
+
+    for valor_x in domains[x]:
+        tiene_soporte = False
+
+        for valor_y in domains[y]:
+            if csp.compatible(x, valor_x, y, valor_y):
+                tiene_soporte = True
+
+        if tiene_soporte == False:
+            domains[x].remove(valor_x)
+            cambio = True
+
+    return cambio
+    
+    cambios realizados con IA: 
+    se agregó list(domains[x]) para recorrer una copia del dominio y poder eliminar elementos sin modificar la lista que se está recorriendo.
+"""
+
     # FIN DEL BLOQUE DEL ESTUDIANTE
 
 
@@ -93,8 +131,50 @@ def ac3(csp, domains):
       csp.neighbors[x] contiene los vecinos de x.
     - revise(csp, x, y, domains) retorna si modificó domains[x].
     """
-    # TODO: Add your code here
-    raise NotImplementedError
+    
+    arcos = deque()
+
+    for x in csp.variables:
+        for y in csp.neighbors[x]:
+            arcos.append((x, y))
+
+    while arcos:
+        x, y = arcos.popleft()
+
+        if revise(csp, x, y, domains):
+
+            if len(domains[x]) == 0:
+                return False
+
+            for vecino in csp.neighbors[x]:
+                if vecino != y:
+                    arcos.append((vecino, x))
+
+    return True
+
+    """
+    Codigo inicial:
+    
+    arcos = deque()
+   
+    for x in csp.variables:
+      for y in csp.neighbors[x]:
+        arcos.append((x, y))
+
+    while arcos:
+        x, y = arcos.popleft()
+
+        if revise(csp, x, y, domains):
+
+            for vecino in csp.neighbors[x]:
+                if vecino != y:
+                    arcos.append((vecino, x))
+
+    return True
+    
+    cambios realizados con IA:
+    Se agregó una verificación para retornar False si domains[x] queda vacío después de la revisión, indicando que no hay solución posible.
+    """
     # FIN DEL BLOQUE DEL ESTUDIANTE
 
 
