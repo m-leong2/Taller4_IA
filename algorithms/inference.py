@@ -33,5 +33,27 @@ def forward_chain(kb):
 
     return tuple(facts)
  
+"""
+Al revisar el código con IA, se encontró que la lógica funcionaba correctamente, 
+pero faltaba devolver los resultados. Por eso, se sugirió utilizar break para 
+finalizar el ciclo y retornar los hechos al final de la función. Se mantuvo la 
+estructura original porque no necesitaba cambios adicionales.
+
+def forward_chain(kb):
+    facts = set(kb.facts)
+    new_facts = set()
+
+    while True:
+        for rule in kb.rules:
+            for substitution, used_facts in match_premises(rule.premises, facts):
+                new_fact = substitute(rule.conclusion, substitution)
+                if new_fact not in facts:
+                    new_facts.add(new_fact)
+        if not new_facts:
+            return tuple(facts)
+        facts.update(new_facts)
+        new_facts.clear()
+"""
+ 
     
     # FIN DEL BLOQUE DEL ESTUDIANTE
