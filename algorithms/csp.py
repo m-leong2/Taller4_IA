@@ -284,7 +284,7 @@ def order_domain_values(csp, variable, assignment, domains):
    
     # FIN DEL BLOQUE DEL ESTUDIANTE
 
-""""
+"""
 def order_domain_values(csp, variable, assignment, domains):
 Punto 3: retorna los valores compatibles ordenados por LCV.
 
