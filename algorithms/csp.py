@@ -200,9 +200,55 @@ def select_unassigned_variable(csp, assignment, domains):
     - csp.neighbors[x] contiene sus vecinos; csp.variables conserva el orden
       original para los desempates.
     """
-    # TODO: Add your code here
-    raise NotImplementedError
+    
+    no_asignadas = [v for v in csp.variables if v not in assignment]
+    
+    def valores_compatibles(v):
+        return sum(1 for val in domains[v] if csp.consistent(v, val, assignment))
+    
+    def contar_vecinos(v):
+        return sum(1 for vecino in csp.neighbors[v] if vecino not in assignment)
+    
+
+    def orden_original(v):
+        return csp.variables.index(v)
+
+    
+    return min(no_asignadas, key=lambda v: (valores_compatibles(v), -contar_vecinos(v), orden_original(v)))
+
     # FIN DEL BLOQUE DEL ESTUDIANTE
+    
+    """
+    primera versionde mi codigo:
+    def select_unassigned_variable(csp, assignment, domains):
+    Punto 3: retorna el identificador de la variable elegida por MRV y grado.
+    
+    no_asignadas = [v for v in csp.variables if v in assignment]
+    
+    def valores_compatibles(v):
+        return sum(1 for val in domains[v] if not csp.consistent(v, val, assignment))
+    
+    def contar_vecinos(v):
+        return sum(1 for vecino in csp.neighbors[v] if vecino in assignment)
+    
+    def orden_original(v):
+        return csp.variables.index(v)
+    
+    return max(no_asignadas, key=lambda v: (valores_compatibles(v), contar_vecinos(v), -orden_original(v)))
+    
+    
+    
+    errores:
+    
+    En la lista no_asignadas, la condición está como "if v in assignment"; en el original es "if v not in assignment".
+    En valores_compatibles, la condición está como "if not csp.consistent(v, val, assignment)"; en el original es "if csp.consistent(v, val, assignment)" (sobra el not).
+    En contar_vecinos, la condición está como "if vecino in assignment"; en el original es "if vecino not in assignment".
+    Al final se usa max(...); en el original es min(...).
+    El desempate usa "-orden_original(v)" con max; aunque cambia respecto al original, matemáticamente equivale a min con orden_original(v), así que es un falso error.
+    
+    IA utilizada DepSeek
+    
+    """
 
 
 def order_domain_values(csp, variable, assignment, domains):
@@ -218,6 +264,54 @@ def order_domain_values(csp, variable, assignment, domains):
     - csp.compatible(variable, valor, vecino, valor_vecino) comprueba cada par
       sin modificar los dominios.
     """
-    # TODO: Add your code here
-    raise NotImplementedError
+   
+    valores_candidatos = [val for val in domains[variable] if csp.consistent(variable, val, assignment)]
+    
+    def contar_descartes(valor):
+        
+        descartes = 0
+        
+        for vecino in csp.neighbors[variable]:
+            if vecino not in assignment:
+
+                for val_vecino in domains[vecino]:
+                    if csp.consistent(vecino, val_vecino, assignment):
+                        if not csp.compatible(variable, valor, vecino, val_vecino):
+                            descartes += 1
+        return descartes
+
+    return sorted(valores_candidatos, key=contar_descartes)
+   
     # FIN DEL BLOQUE DEL ESTUDIANTE
+
+""""
+def order_domain_values(csp, variable, assignment, domains):
+Punto 3: retorna los valores compatibles ordenados por LCV.
+
+valores_candidatos = [val for val in domains[variable] if not csp.consistent(variable, val, assignment)]
+
+def contar_descartes(valor):
+descartes = 0
+for vecino in csp.neighbors[variable]:
+if vecino in assignment:
+for val_vecino in domains[vecino]:
+if csp.consistent(vecino, val_vecino, assignment):
+if csp.compatible(variable, valor, vecino, val_vecino):
+descartes += 1
+return descartes
+
+return sorted(valores_candidatos, key=contar_descartes, reverse=True)
+
+
+Errores:
+En valores_candidatos sobra el not: debe ser csp.consistent(...), no not csp.consistent(...).
+
+En contar_descartes el filtro de vecinos está invertido: debe ser if vecino not in assignment, no if vecino in assignment.
+
+En la comprobación de pares falta el not: debe ser if not csp.compatible(...), no if csp.compatible(...).
+
+En el sorted sobra reverse=True.}
+
+IA usada DeepSeek
+
+"""
